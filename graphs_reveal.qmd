@@ -1,0 +1,150 @@
+---
+title: "Graphs with ggplot: an introduction"
+author: "A Pathmeswaran<br>pathmes@kln.ac.lk"
+format: 
+  revealjs:
+    embed-resources: true
+    standalone: true
+editor: visual
+---
+
+```{r}
+#| label: load-packages_data
+suppressMessages(library(tidyverse))
+load("bwt.RData")
+
+```
+
+## ggplot
+
+-   The R software has reasonable graphic capabilities, and it is fairly easy to learn.
+
+-   The ggplot2 package (part of tidyverse) gives users an opportunity to create excellent graphs.
+
+-   As it is a very versatile package, learning to use it can be a bit daunting initially.
+
+-   But once you grasp the basics, it is easy to make progress as the logic behind the the creation of graphs is the same for all graphs.
+
+## Using this presentation
+
+-   Copy this presentation and the data set ***bwt.RData*** into a project directory
+
+-   Open the presentation
+
+-   Load the data set - `load("bwt.RData")`
+
+-   The following slides are based on the idea of learning in small increments - draw a basic plot and improve it by making small changes.
+
+-   For each graph, there will be a slide with the default graph and the code to produce it. The next slide will have several tabs - the code and the output of each small change on a different Tab.
+
+## Histogram - Default {.smaller}
+
+Histograms are used to visualise the distribution of a numeric variable
+
+::: panel-tabset
+## Code
+
+```{r}
+#| label: hist1
+#| echo: true
+#| eval: false
+#| warning: false
+#| message: false
+
+ggplot(data = bwt, mapping = aes(x = weight)) +
+  geom_histogram()
+
+```
+
+## Output
+
+```{r}
+#| label: hist1a
+#| echo: false
+#| eval: true
+
+
+ggplot(data = bwt, mapping = aes(x = weight)) +
+  geom_histogram()
+```
+:::
+
+## Histogram - revisions {.smaller}
+
+::: panel-tabset
+## Binwidth
+
+```{r}
+#| label: hist2a
+#| echo: true
+#| eval: true
+#| warning: false
+#| message: false
+
+ggplot(data = bwt, mapping = aes(x = weight)) +
+  geom_histogram(binwidth = 5)
+```
+
+## Colour
+
+```{r}
+#| label: hist2b
+#| echo: true
+#| eval: true
+#| warning: false
+#| message: false
+
+ggplot(data = bwt, mapping = aes(x = weight)) +
+  geom_histogram(binwidth = 5,
+                 colour = "blue",
+                 fill = "lightblue")
+```
+
+## Axis titles
+
+```{r}
+#| label: hist2c
+#| echo: true
+#| eval: true
+#| warning: false
+#| message: false
+
+ggplot(data = bwt, mapping = aes(x = weight)) +
+  geom_histogram(binwidth = 5,
+                 colour = "blue",
+                 fill = "lightblue") +
+  labs(x = "Pre delivery weight")
+
+  
+```
+
+## Title
+
+```{r}
+#| label: hist2d
+#| echo: true
+#| eval: true
+#| warning: false
+#| message: false
+
+ggplot(data = bwt, mapping = aes(x = weight)) +
+  geom_histogram(binwidth = 5,
+                 colour = "blue",
+                 fill = "lightblue") +
+  labs(x = "Pre delivery weight", title = "Histogram of Pre delivery weight")
+
+
+```
+:::
+
+## Histogram - comments & questions {.smaller}
+
+-   Default - Too many bins - the technical term for the number of 'bars'. We can specify the number of bins (or bin width) within `geom_histogram()`
+
+-   Bin width - Try out different numbers for "binwidth". What should be the correct number?
+
+-   Colour - Note - `colour` specifies the colour of the border; you have to specify `fill` to use a colour to fill a shape! Try different colours for colour & fill
+
+    How many named colours are available? Try typing `colours()` in the console
+
+-   Axis title and figure title. Check all the available options by typing `?labs`
