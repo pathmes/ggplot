@@ -25,13 +25,15 @@ load("bwt.RData")
 
 -   But once you grasp the basics, it is easy to make progress as the logic behind the the creation of graphs is the same for all graphs.
 
-## Using this presentation
+## Using this presentation{.smaller}
 
 -   Copy this presentation and the data set ***bwt.RData*** into a project directory
 
 -   Open the presentation
 
 -   Load the data set - `load("bwt.RData")`
+
+-   Load the required package - `library(tidyverse)`
 
 -   The following slides are based on the idea of learning in small increments - draw a basic plot and improve it by making small changes.
 
