@@ -15,17 +15,17 @@ load("bwt.RData")
 
 ```
 
-## ggplot
+# ggplot
 
--   The R software has reasonable graphic capabilities, and it is fairly easy to learn.
+-   The R software has reasonable graphic capabilities and is relatively easy to learn.
 
--   The ggplot2 package (part of tidyverse) gives users an opportunity to create excellent graphs.
+-   The ggplot2 package (part of tidyverse) allows users to create excellent graphs.
 
 -   As it is a very versatile package, learning to use it can be a bit daunting initially.
 
--   But once you grasp the basics, it is easy to make progress as the logic behind the the creation of graphs is the same for all graphs.
+-   However, once you grasp the basics, it is easy to make progress, as the logic behind the creation of graphs is the same for all graphs.
 
-## Using this presentation{.smaller}
+## Using this presentation {.smaller}
 
 -   Copy this presentation and the data set ***bwt.RData*** into a project directory
 
@@ -35,13 +35,15 @@ load("bwt.RData")
 
 -   Load the required package - `library(tidyverse)`
 
--   The following slides are based on the idea of learning in small increments - draw a basic plot and improve it by making small changes.
+-   The following slides are based on learning in small increments - draw a basic plot and improve it by making small changes.
 
--   For each graph, there will be a slide with the default graph and the code to produce it. The next slide will have several tabs - the code and the output of each small change on a different Tab.
+-   Most slides will have two tabs. The **code** tab will have the code required to produce the graph, and the **output** tab will have the graph
 
-## Histogram - Default {.smaller}
+# Histogram
 
-Histograms are used to visualise the distribution of a numeric variable
+Histograms are used to visualise the distribution of a numeric variable.
+
+## Histogram - Default Plot
 
 ::: panel-tabset
 ## Code
@@ -54,7 +56,23 @@ Histograms are used to visualise the distribution of a numeric variable
 #| message: false
 
 ggplot(data = bwt, mapping = aes(x = weight)) +
-  geom_histogram()
+geom_histogram()
+
+```
+
+-   The first line of code indicates the data set to use and the variable/s to be used, and the second line of code draws the graph - histogram geom_histogram()
+
+-   We can assign the first line to a named object, and that object can be combined with a shape.
+
+```{r}
+#| label: hist1x
+#| echo: true
+#| eval: false
+#| warning: false
+#| message: false
+
+p <- ggplot(data = bwt, mapping = aes(x = weight))
+p +  geom_histogram()
 
 ```
 
@@ -71,15 +89,17 @@ ggplot(data = bwt, mapping = aes(x = weight)) +
 ```
 :::
 
-## Histogram - revisions {.smaller}
+## Histogram - Changing Binwidth
 
 ::: panel-tabset
-## Binwidth
+## Code
+
+There are too many bins - the technical term for the number of 'bars'. We can specify the number of bins (or bin width, but not both together) within `geom_histogram()`
 
 ```{r}
-#| label: hist2a
+#| label: hist2
 #| echo: true
-#| eval: true
+#| eval: false
 #| warning: false
 #| message: false
 
@@ -87,12 +107,37 @@ ggplot(data = bwt, mapping = aes(x = weight)) +
   geom_histogram(binwidth = 5)
 ```
 
-## Colour
+Try out different numbers for "binwidth".\
+What should be the correct number of bins?\
+**Remove the line numbers after copying the code**
+
+## Output
 
 ```{r}
-#| label: hist2b
-#| echo: true
+#| label: hist2a
+#| echo: false
 #| eval: true
+#| warning: false
+#| message: false
+
+ggplot(data = bwt, mapping = aes(x = weight)) +
+  geom_histogram(binwidth = 5)
+```
+:::
+
+## Histogram - Changing Colour
+
+::: panel-tabset
+## Code
+
+Note - `colour` specifies the colour of the border; you have to specify `fill` to use a colour to fill a shape! Try different colours for colour & fill.
+
+How many named colours are available? Try typing `colours()` in the console.
+
+```{r}
+#| label: hist3
+#| echo: true
+#| eval: false
 #| warning: false
 #| message: false
 
@@ -102,12 +147,31 @@ ggplot(data = bwt, mapping = aes(x = weight)) +
                  fill = "lightblue")
 ```
 
-## Axis titles
+## Output
 
 ```{r}
-#| label: hist2c
-#| echo: true
+#| label: hist3a
+#| echo: false
 #| eval: true
+#| warning: false
+#| message: false
+
+ggplot(data = bwt, mapping = aes(x = weight)) +
+  geom_histogram(binwidth = 5,
+                 colour = "blue",
+                 fill = "lightblue")
+```
+:::
+
+## Histogram - Changing Axis Title
+
+::: panel-tabset
+## Code
+
+```{r}
+#| label: hist4
+#| echo: true
+#| eval: false
 #| warning: false
 #| message: false
 
@@ -120,11 +184,54 @@ ggplot(data = bwt, mapping = aes(x = weight)) +
   
 ```
 
-## Title
+## Output
 
 ```{r}
-#| label: hist2d
+#| label: hist4a
+#| echo: false
+#| eval: true
+#| warning: false
+#| message: false
+
+ggplot(data = bwt, mapping = aes(x = weight)) +
+  geom_histogram(binwidth = 5,
+                 colour = "blue",
+                 fill = "lightblue") +
+  labs(x = "Pre delivery weight")
+
+  
+```
+:::
+
+## Histogram - Changing Title
+
+::: panel-tabset
+## Code
+
+```{r}
+#| label: hist5
 #| echo: true
+#| eval: false
+#| warning: false
+#| message: false
+
+ggplot(data = bwt, mapping = aes(x = weight)) +
+  geom_histogram(binwidth = 5,
+                 colour = "blue",
+                 fill = "lightblue") +
+  labs(x = "Pre delivery weight", title = "Histogram of Pre delivery weight")
+
+
+```
+
+Check all the available options for `labs` by typing `?labs`\
+How would you increase the font size?
+
+## Code
+
+```{r}
+#| label: hist5a
+#| echo: false
 #| eval: true
 #| warning: false
 #| message: false
@@ -139,14 +246,256 @@ ggplot(data = bwt, mapping = aes(x = weight)) +
 ```
 :::
 
-## Histogram - comments & questions {.smaller}
+## Histogram - comments & questions
 
--   Default - Too many bins - the technical term for the number of 'bars'. We can specify the number of bins (or bin width) within `geom_histogram()`
+Try `?geom_histogram`
 
--   Bin width - Try out different numbers for "binwidth". What should be the correct number?
+Create a histogram showing the distribution of birth weight (the name of the variable is bw).\
+How would you plot the distribution of birth weight by the mode of delivery (modelv)
 
--   Colour - Note - `colour` specifies the colour of the border; you have to specify `fill` to use a colour to fill a shape! Try different colours for colour & fill
+## Histogram - By Group
 
-    How many named colours are available? Try typing `colours()` in the console
+::: panel-tabset
+## Code
 
--   Axis title and figure title. Check all the available options by typing `?labs`
+We could try showing the different modes of delivery groups by using different colours.\
+The is not satisfactory due to overlapping.
+
+```{r}
+#| label: hist6
+#| echo: true
+#| eval: false
+#| warning: false
+#| message: false
+
+ggplot(data = bwt, mapping = aes(x = bw, fill = modelv)) +
+  geom_histogram(bins = 10)
+```
+
+The effect of overlapping can be reduced by making the 'bars' transparent.
+
+```{r}
+#| label: hist6x
+#| echo: true
+#| eval: false
+#| warning: false
+#| message: false
+
+ggplot(data = bwt, mapping = aes(x = bw, fill = modelv)) +
+  geom_histogram(bins = 10, alpha = 0.5, position = "identity")
+```
+
+## Output
+
+```{r}
+#| label: hist6a
+#| echo: false
+#| eval: true
+#| warning: false
+#| message: false
+
+ggplot(data = bwt, mapping = aes(x = bw, fill = modelv)) +
+  geom_histogram(bins = 10)
+```
+
+## Output with Transparency (alpha)
+
+```{r}
+#| label: hist6b
+#| echo: false
+#| eval: true
+#| warning: false
+#| message: false
+
+ggplot(data = bwt, mapping = aes(x = bw, fill = modelv)) +
+  geom_histogram(bins = 10, alpha = 0.5, position = "identity")
+```
+:::
+
+# Boxplots
+
+Display the distribution of a numeric variable, including a measure of the middle and spread. Go to Google and find out more about the boxplot. It is also called the box and whisker plot.
+
+## Boxplot Default Plot
+
+::: panel-tabset
+## Code
+
+```{r}
+#| label: box1
+#| echo: true
+#| eval: false
+#| warning: false
+#| message: false
+
+ggplot(data = bwt, aes(modelv, bw)) + 
+geom_boxplot()
+
+
+```
+
+What would happen if we change the order of the variables given as `aes()?`
+
+## Output
+
+```{r}
+#| label: box1a
+#| echo: false
+#| eval: true
+#| warning: false
+#| message: false
+
+ggplot(data = bwt, aes(modelv, bw)) + 
+geom_boxplot()
+```
+:::
+
+## Boxplot Modified
+
+::: panel-tabset
+## Code
+
+Change y-axis breaks and labels\
+Add a horizontal dashed line indicating the overall median birth weight
+
+```{r}
+#| label: box2 
+#| echo: true  
+#| eval: false 
+#| warning: false 
+#| message: false  
+
+ggplot(data = bwt, aes(modelv, bw)) +
+  geom_boxplot() +
+  scale_y_continuous(breaks = seq(500, 4500, 500)) +
+  labs(x = "Mode of Delivery", 
+       y = "Birth weight (g)") +
+  geom_hline(yintercept = median(bwt$bw), 
+             linetype = "dashed")
+
+```
+
+## Output
+
+```{r}
+#| label: box2a 
+#| echo: false 
+#| eval: true 
+#| warning: false 
+#| message: false  
+
+ggplot(data = bwt, aes(modelv, bw)) +
+  geom_boxplot() +
+  scale_y_continuous(breaks = seq(500, 4500, 500)) +
+  labs(x = "Mode of Delivery", 
+       y = "Birth weight (g)") +
+  geom_hline(yintercept = median(bwt$bw), 
+             linetype = "dashed")
+
+```
+:::
+
+
+
+
+## Barchart Default Plot
+
+::: panel-tabset
+## Code
+
+```{r}
+#| label: bar1
+#| echo: true
+#| eval: false
+#| warning: false
+#| message: false
+
+ggplot(data = bwt, aes(x = modelv)) + 
+geom_bar()
+# create a new data set for additional barcharts
+bwt_md <- bwt %>% group_by(modelv) %>% 
+  summarise(lbw_p = sum(lbw)*100/n(), # percent lbw
+            N = n(), # number in each modelv group
+            P = n()*100/nrow(bwt)) # % in modelv group
+
+
+```
+
+
+
+## Output
+
+```{r}
+#| label: bar1a
+#| echo: false
+#| eval: true
+#| warning: false
+#| message: false
+
+ggplot(data = bwt, aes(x = modelv)) + 
+geom_bar()
+```
+:::
+
+
+
+
+## Barchat Modified
+
+::: panel-tabset
+## Code
+
+Percent low birth weight by mode of delivery
+
+
+```{r}
+#| label: bar21 
+#| echo: true  
+#| eval: false 
+#| warning: false 
+#| message: false  
+
+ggplot(data = bwt_md, mapping = aes(x = modelv, y = P)) + geom_bar(stat = 'identity')
+```
+
+
+Change the order of the bars
+```{r}
+#| label: bar22 
+#| echo: true  
+#| eval: false 
+#| warning: false 
+#| message: false  
+
+ggplot(data = bwt_md, mapping = aes(x = reorder(modelv), y = P)) + geom_bar(stat = 'identity')
+```
+Change colour of the bars
+```{r}
+#| label: bar23 
+#| echo: true  
+#| eval: false 
+#| warning: false 
+#| message: false  
+
+ggplot(data = bwt_md, mapping = aes(x = modelv, y = P, fill = modelv)) + geom_bar(stat = 'identity')
+```
+## Output
+
+```{r}
+#| label: bar2a 
+#| echo: false 
+#| eval: true 
+#| warning: false 
+#| message: false  
+
+ggplot(data = bwt, aes(modelv, bw)) +
+  geom_boxplot() +
+  scale_y_continuous(breaks = seq(500, 4500, 500)) +
+  labs(x = "Mode of Delivery", 
+       y = "Birth weight (g)") +
+  geom_hline(yintercept = median(bwt$bw), 
+             linetype = "dashed")
+
+```
+:::
+
